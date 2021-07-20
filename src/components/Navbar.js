@@ -109,7 +109,7 @@ export default (props) => {
                 <Dropdown.Divider /> */}
 
                 <Dropdown.Item className="fw-bold">
-                  <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2" /> Logout
+                  <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2" onClick={() => localStorage.removeItem('myData')} /> Logout
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

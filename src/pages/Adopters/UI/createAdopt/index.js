@@ -2,24 +2,42 @@ import React, { useContext, useState } from 'react';
 import { Button, Modal } from '@themesberg/react-bootstrap';
 import { Form } from '@themesberg/react-bootstrap';
 import Context from '../../Brain/context'
+import axios from 'axios'
 
 const Create = () => {
 
   const { modalAdopt, setModalAdopt } = useContext(Context)
-  const [name, setName] = useState('')
+  const [form, setForm] = useState({
+    name: '',
+    dni:'',
+    direction: '',
+    cel: '',
+    age: '',
+  })
+
+
 
 
   const handleClose = () => {
     setModalAdopt({ open: false })
   }
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
+
+    try {
+      const res = await axios.post('http://localhost:3000/adopters', {
+        ...form,
+        headers: {
+          'Authorization': `bearer ${localStorage.getItem('token')}`
+        }
+      })
+      console.log(res);
+    } catch  {
+      
+    }
   }
 
-  const onChangeName = (e) => {
-    console.log(e.target.value);
-  }
   return (
     <Modal as={Modal.Dialog} centered show={modalAdopt.open} onHide={handleClose}>
       <Form >
@@ -30,19 +48,23 @@ const Create = () => {
         <Modal.Body>
           <Form.Group className="mb-3">
             <Form.Label>Nombre Completo</Form.Label>
-            <Form.Control type="text" placeholder="Escriba un nombre" onChange={onChangeName} />
+            <Form.Control type="text" placeholder="Escriba un nombre" onChange={(e) => setForm({ ...form, name: e.target.value })}/>
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>DNI</Form.Label>
-            <Form.Control type="text" placeholder="Escriba una dni" />
+            <Form.Control type="text" placeholder="Escriba una dni" onChange={(e) => setForm({ ...form, dni: e.target.value })}  />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Dirección</Form.Label>
-            <Form.Control type="text" placeholder="Escriba una dirección" />
+            <Form.Control type="text" placeholder="Escriba una dirección" onChange={(e) => setForm({ ...form, direction: e.target.value })}/>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Celular</Form.Label>
+            <Form.Control type="text" placeholder="Escriba una dirección" onChange={(e) => setForm({ ...form, cel: e.target.value })} />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Edad</Form.Label>
-            <Form.Control type="text" placeholder="Escriba una edad" />
+            <Form.Control type="text" placeholder="Escriba una edad" onChange={(e) => setForm({ ...form, age: e.target.value })}/>
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
