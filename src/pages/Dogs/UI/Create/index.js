@@ -123,9 +123,9 @@ const Create = () => {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Sexo</Form.Label>
-            <Form.Select value={form.gender}   onChange={(e) => setForm({ ...form, gender: e.target.value })}>
-              <option defaultValue>Macho</option>
-              <option>Hembra</option>
+            <Form.Select value={form.gender} onChange={(e) => setForm({ ...form, gender: e.target.value })}>
+              <option defaultValue value='Macho'>Macho</option>
+              <option value='Hembra'>Hembra</option>
             </Form.Select>
           </Form.Group>
           <Form.Group className="mb-3">
@@ -135,8 +135,8 @@ const Create = () => {
           <Form.Group className="mb-3">
             <Form.Label>Esterelizado</Form.Label>
             <Form.Select value={form.sterilized}   onChange={(e) => setForm({ ...form, sterilized: e.target.value })}>
-              <option defaultValue>No</option>
-              <option>Si</option>
+              <option defaultValue value={false}>No</option>
+              <option value={true}>Si</option>
             </Form.Select>
           </Form.Group>
           <Form.Group className="mb-3">
