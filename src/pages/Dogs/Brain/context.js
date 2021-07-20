@@ -4,7 +4,9 @@ const Context = React.createContext()
 
 export const Provider = ({ children }) => {
   const [modalCreateDog, setModalCreateDog] = useState({open: false, type: ''})
-  const [modalAdoptDog, setModalAdoptDog] = useState(false)
+  const [modalAdoptDog, setModalAdoptDog] = useState({open:false})
+  const [modalImage, setModalImage] = useState({ open: false, img: '' })
+
 
   const [dogs, setDogs] = useState([])
 
@@ -14,7 +16,9 @@ export const Provider = ({ children }) => {
     dogs, 
     setDogs,
     modalAdoptDog,
-    setModalAdoptDog
+    setModalAdoptDog,
+    modalImage, 
+    setModalImage
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>

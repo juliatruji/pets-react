@@ -17,26 +17,26 @@ export default () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  console.log(localStorage.getItem('token'));
   const getLogin = async () => {
     try {
       const res = await axios.post('http://localhost:3000/logins', {
         email: email,
         password: password
       })
-      console.log(res.data.access_token);
+      console.log(res.data);
       localStorage.setItem('token', res.data.access_token);
-        // getter
+      localStorage.setItem('name', res.data.name);
+      localStorage.setItem('idAdmin', res.data.id);
+      localStorage.setItem('email', res.data.email);
+      localStorage.setItem('keys', password);
+
     } catch (error) {
       console.log(error);
     }
   }
 
   const onSubmitLogin = (e) => {
-    console.log(email);
-    console.log(password);
     e.preventDefault();
-    
     getLogin()
   }
 

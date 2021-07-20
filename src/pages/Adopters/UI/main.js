@@ -39,7 +39,7 @@ const Main = () => {
             </InputGroup>
           </Col>
           <Col xs={4} md={2} xl={1} className="ps-md-0 text-end">
-            <Button variant="primary" className="m-1" onClick={() => setModalAdopt({open:true})}>
+            <Button variant="primary" className="m-1" onClick={() => setModalAdopt({ open: true, type: 'create'})}>
               <FontAwesomeIcon icon={faPlus} className="me-2" /> Agregar
             </Button>
             {/* <Dropdown as={ButtonGroup}>

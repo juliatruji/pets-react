@@ -1,46 +1,57 @@
 
-import React from "react";
+import React, { useContext, useEffect} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {   faEdit, faEllipsisH,  faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {  Nav, Card,  Button, Table, Dropdown, Pagination, ButtonGroup } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
-
 import { Routes } from "../../../../routes";
-import transactions from "../../../../data/transactions";
+import { API, token } from '../../../../config/helpers'
+import axios from 'axios'
+import Context from '../../Brain/context'
 
-const data = [
-  {
-    "imagen": 'img.jpg',
-    "tipo": "Rabia",
-    "fecha": "02/07/2021",
-    "nombre": "lION",
-  },
-]
 export const TransactionsTable = () => {
+  const { vaccines, setVaccines} = useContext(Context)
 
+
+  const getAdopter = async () => {
+    try {
+      const res = await axios.get(`${API}/veterinary_appointments`, {
+        headers: {
+          'Authorization': `${token}`
+        }
+      })
+
+      setVaccines([...res.data])
+    } catch {
+
+    }
+  }
+  useEffect(() => {
+    getAdopter()
+  }, [])
   const TableRow = (props) => {
-    const { imagen, tipo, fecha, nombre } = props;
+    const { image, control_type, date, pet } = props;
 
     return (
       <tr>
         <td>
           <Card.Link as={Link} to={Routes.Invoice.path} className="fw-normal">
-            {imagen}
+            {image}
           </Card.Link>
         </td>
         <td>
           <span className="fw-normal">
-            {tipo}
+            {control_type}
           </span>
         </td>
         <td>
           <span className="fw-normal">
-            {fecha}
+            {date}
           </span>
         </td>
         <td>
           <span className="fw-normal">
-            {nombre}
+            {pet.name}
           </span>
         </td>
         <td>
@@ -75,7 +86,7 @@ export const TransactionsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map(t => <TableRow key={`transaction-${t.invoiceNumber}`} {...t} />)}
+            {vaccines.map((t, i) => <TableRow key={i} {...t} />)}
           </tbody>
         </Table>
         <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">

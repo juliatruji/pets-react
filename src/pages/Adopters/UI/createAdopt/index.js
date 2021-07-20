@@ -1,21 +1,20 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Modal } from '@themesberg/react-bootstrap';
 import { Form } from '@themesberg/react-bootstrap';
+import {API, token} from '../../../../config/helpers'
 import Context from '../../Brain/context'
 import axios from 'axios'
 
 const Create = () => {
 
-  const { modalAdopt, setModalAdopt } = useContext(Context)
+  const { modalAdopt, setModalAdopt, adopts, setAdopts } = useContext(Context)
   const [form, setForm] = useState({
     name: '',
     dni:'',
-    direction: '',
+    address: '',
     cel: '',
     age: '',
   })
-
-
 
 
   const handleClose = () => {
@@ -25,18 +24,61 @@ const Create = () => {
   const handleSave = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await axios.post('http://localhost:3000/adopters', {
-        ...form,
-        headers: {
-          'Authorization': `bearer ${localStorage.getItem('token')}`
+    if (modalAdopt.type === 'create') {
+        try {
+          const res = await axios.post(`${API}/adopters`, {
+            ...form,
+          }, {
+            headers: {
+              'Authorization': `${token}`
+            }
+          })
+          setAdopts([res.data.data.adopter, ...adopts])
+          setModalAdopt({ open: false })
+        } catch  {
+          
         }
-      })
-      console.log(res);
-    } catch  {
-      
+    } else if (modalAdopt.type === 'edit') {
+      try {
+        const res = await axios.patch(`${API}/adopters/${modalAdopt.id}`, {
+          ...form,
+        }, {
+          headers: {
+            'Authorization': `${token}`
+          }
+        })
+
+        const data = [...adopts]
+        data[modalAdopt.index] = res.data.data.adopter
+        setAdopts([...data])
+        setModalAdopt({ open: false })
+      } catch {
+
+      }
     }
   }
+
+  const getAdopter = async () => {
+    try {
+      const res = await axios.get(`${API}/adopters/${modalAdopt.id}`, {
+        headers: {
+          'Authorization': `${token}`
+        }
+      })
+
+      console.log(res.data);
+      setForm({
+        ...res.data
+      })
+    } catch {
+
+    }
+  }
+  useEffect(() => {
+    if (modalAdopt.type === 'edit') {
+      getAdopter()
+    }
+  }, [modalAdopt])
 
   return (
     <Modal as={Modal.Dialog} centered show={modalAdopt.open} onHide={handleClose}>
@@ -48,23 +90,23 @@ const Create = () => {
         <Modal.Body>
           <Form.Group className="mb-3">
             <Form.Label>Nombre Completo</Form.Label>
-            <Form.Control type="text" placeholder="Escriba un nombre" onChange={(e) => setForm({ ...form, name: e.target.value })}/>
+            <Form.Control type="text" placeholder="Escriba un nombre" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}/>
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>DNI</Form.Label>
-            <Form.Control type="text" placeholder="Escriba una dni" onChange={(e) => setForm({ ...form, dni: e.target.value })}  />
+            <Form.Control type="text" placeholder="Escriba una dni" value={form.dni} onChange={(e) => setForm({ ...form, dni: e.target.value })}  />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Dirección</Form.Label>
-            <Form.Control type="text" placeholder="Escriba una dirección" onChange={(e) => setForm({ ...form, direction: e.target.value })}/>
+            <Form.Control type="text" placeholder="Escriba una dirección" value={form.address } onChange={(e) => setForm({ ...form, address: e.target.value })}/>
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Celular</Form.Label>
-            <Form.Control type="text" placeholder="Escriba una dirección" onChange={(e) => setForm({ ...form, cel: e.target.value })} />
+            <Form.Control type="text" placeholder="Escriba una dirección" value={form.cel }onChange={(e) => setForm({ ...form, cel: e.target.value })} />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Edad</Form.Label>
-            <Form.Control type="text" placeholder="Escriba una edad" onChange={(e) => setForm({ ...form, age: e.target.value })}/>
+            <Form.Control type="text" placeholder="Escriba una edad" value={form.age } onChange={(e) => setForm({ ...form, age: e.target.value })}/>
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>

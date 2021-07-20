@@ -1,37 +1,51 @@
 
-import React from "react";
+import React, { useState, useEffect} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {   faEdit, faEllipsisH,  faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {  Nav, Card,  Button, Table, Dropdown, Pagination, ButtonGroup } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
-
 import { Routes } from "../../../../routes";
-import transactions from "../../../../data/transactions";
+import { API, token } from '../../../../config/helpers'
+import axios from 'axios'
 
-const data = [
-  {
-    "name": 'Julia Trujillo Mediano',
-    "dog": "Lion",
-    "date": "05/02/2021",
-    "admin": "123243652346",
-  },
-]
+
 
 export const TransactionsTable = () => {
 
+  const [adoptions, setAdptions] = useState([])
+
+  const getAdoptions = async () => {
+    try {
+      const res = await axios.get(`${API}/adoptions`, {
+        headers: {
+          'Authorization': `${token}`
+        }
+      })
+
+      console.log(res.data);
+      setAdptions(res.data)
+
+    } catch {
+
+    }
+  }
+  useEffect(() => {
+    getAdoptions()
+  }, [])
+
   const TableRow = (props) => {
-    const { name, dog, date, admin } = props;
+    const { adopter, pet, date, admin } = props;
 
     return (
       <tr>
         <td>
           <Card.Link as={Link} to={Routes.Invoice.path} className="fw-normal">
-            {name}
+            {adopter.name}
           </Card.Link>
         </td>
         <td>
           <span className="fw-normal">
-            {dog}
+            {pet.name}
           </span>
         </td>
         <td>
@@ -41,7 +55,7 @@ export const TransactionsTable = () => {
         </td>
         <td>
           <span className="fw-normal">
-            {admin}
+            {admin.name}
           </span>
         </td>
       </tr>
@@ -61,7 +75,7 @@ export const TransactionsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map(t => <TableRow key={`transaction-${t.invoiceNumber}`} {...t} />)}
+            {adoptions.map(t => <TableRow key={`transaction-${t.invoiceNumber}`} {...t} />)}
           </tbody>
         </Table>
         <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">

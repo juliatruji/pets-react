@@ -4,6 +4,7 @@ import { faCheck, faCog, faHome, faSearch, faPlus } from '@fortawesome/free-soli
 import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown } from '@themesberg/react-bootstrap';
 import Create from './Create'
 import ApoptDog from './AdoptDog'
+import ModalImage from './ModalImage'
 
 import { TransactionsTable } from './Table/index.js';
 import Context from '../Brain/context'
@@ -41,7 +42,7 @@ const Main = () => {
             </InputGroup>
           </Col>
           <Col xs={4} md={2} xl={1} className="ps-md-0 text-end">
-            <Button variant="primary" className="m-1" onClick={() => setModalCreateDog({ open: true })}>
+            <Button variant="primary" className="m-1" onClick={() => setModalCreateDog({ open: true, type: 'create' })}>
               <FontAwesomeIcon icon={faPlus} className="me-2" /> Agregar
             </Button>
           </Col>
@@ -50,6 +51,7 @@ const Main = () => {
       <TransactionsTable />
       <ApoptDog />
       <Create />
+      <ModalImage />
     </>
   );
 };

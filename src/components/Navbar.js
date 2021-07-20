@@ -46,6 +46,11 @@ export default (props) => {
     );
   };
 
+  const handleLogout = () => {
+    console.log('asdsd');
+    localStorage.clear()
+  }
+
   return (
     <Navbar variant="dark" expanded className="ps-0 pe-2 pb-0">
       <Container fluid className="px-0">
@@ -108,8 +113,8 @@ export default (props) => {
 
                 <Dropdown.Divider /> */}
 
-                <Dropdown.Item className="fw-bold">
-                  <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2" onClick={() => localStorage.removeItem('myData')} /> Logout
+                <Dropdown.Item className="fw-bold" onClick={() => handleLogout()}>
+                  <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2"  /> Logout
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

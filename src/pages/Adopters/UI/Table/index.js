@@ -1,11 +1,13 @@
 
-import React, { useContext} from "react";
+import React, { useContext, useEffect} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {   faEdit, faEllipsisH,  faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {  Nav, Card,  Button, Table, Dropdown, Pagination, ButtonGroup } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 import Context from '../../Brain/context'
 import { Routes } from "../../../../routes";
+import { API, token } from '../../../../config/helpers'
+import axios from 'axios'
 
 const data = [
   {
@@ -20,11 +22,29 @@ const data = [
 
 export const TransactionsTable = () => {
 
-  
+  const { adopts, setAdopts } = useContext(Context)
+
+  const getAdopter =  async () => {
+    try {
+      const res = await axios.get(`${API}/adopters`, {
+        headers: {
+          'Authorization': `${token}`
+        }
+      })
+      
+      console.log(res.data);
+      setAdopts([...res.data])
+
+    } catch {
+
+    }
+  }
+  useEffect(() => {
+    getAdopter()
+  }, [])
 
   const TableRow = (props) => {
-    const { name, dni, direction, phone, edad } = props;
-
+    const { id, name, dni, address, cel, age, index } = props;
     const { setModalAdopt } = useContext(Context)
 
     return (
@@ -41,17 +61,17 @@ export const TransactionsTable = () => {
         </td>
         <td>
           <span className="fw-normal">
-            {direction}
+            {address}
           </span>
         </td>
         <td>
           <span className="fw-normal">
-            {phone}
+            {cel}
           </span>
         </td>
         <td>
           <span className="fw-normal">
-            ${parseFloat(edad).toFixed(2)}
+            {age}
           </span>
         </td>
         <td>
@@ -62,7 +82,7 @@ export const TransactionsTable = () => {
               </span>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => setModalAdopt({ open:true })}>
+              <Dropdown.Item onClick={() => setModalAdopt({ open: true, id: id, type: 'edit', index: index })}>
                 <FontAwesomeIcon icon={faEdit} className="me-2" /> Editar
               </Dropdown.Item>
               <Dropdown.Item className="text-danger">
@@ -90,7 +110,7 @@ export const TransactionsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map(t => <TableRow key={`transaction-${t.invoiceNumber}`} {...t} />)}
+            {adopts.map((t, index) => <TableRow key={index} {...t} index={index} />)}
           </tbody>
         </Table>
         <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
