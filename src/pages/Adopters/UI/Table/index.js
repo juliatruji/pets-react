@@ -3,21 +3,10 @@ import React, { useContext, useEffect} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {   faEdit, faEllipsisH,  faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {  Nav, Card,  Button, Table, Dropdown, Pagination, ButtonGroup } from '@themesberg/react-bootstrap';
-import { Link } from 'react-router-dom';
 import Context from '../../Brain/context'
-import { Routes } from "../../../../routes";
 import { API, token } from '../../../../config/helpers'
 import axios from 'axios'
 
-const data = [
-  {
-    "name": 'Julia',
-    "dni": "1235123",
-    "direction": "Platinum Subscription Plan",
-    "phone": "123243652346",
-    "edad": '105',
-  },
-]
 
 
 export const TransactionsTable = () => {
@@ -50,9 +39,7 @@ export const TransactionsTable = () => {
     return (
       <tr>
         <td>
-          <Card.Link as={Link} to={Routes.Invoice.path} className="fw-normal">
-            {name}
-          </Card.Link>
+          {name}
         </td>
         <td>
           <span className="fw-normal">
