@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCog, faHome, faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown } from '@themesberg/react-bootstrap';
+import { Col, Row, Form, Button, Breadcrumb, InputGroup, Toast } from '@themesberg/react-bootstrap';
 import Create from './Create'
 import ApoptDog from './AdoptDog'
 import ModalImage from './ModalImage'
-
+import { faBootstrap } from '@fortawesome/free-brands-svg-icons';
 import { TransactionsTable } from './Table/index.js';
 import Context from '../Brain/context'
+
 const Main = () => {
 
   const { setModalCreateDog } = useContext(Context)

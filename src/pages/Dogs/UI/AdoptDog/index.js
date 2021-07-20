@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios'
 import { API, token } from '../../../../config/helpers'
+import swal from 'sweetalert';
 
 const Create = () => {
 
@@ -22,11 +23,11 @@ const Create = () => {
     setModalAdoptDog({open:false})
   }
 
-  const handleSave = async(e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
    
     try {
-      const res = await axios.post(`${API}/adoptions`, {
+      await axios.post(`${API}/adoptions`, {
         adoption:{
           date: dateAdopt,
           pet_id: modalAdoptDog.dog?.id,
@@ -47,8 +48,10 @@ const Create = () => {
       setDogs(data)
 
       setModalAdoptDog({open:false})
+      swal("Estupendo!", "Operación exitosa", "success");
     } catch (error) {
-      
+      swal("Opps!", "Ocurrió un error", "error");
+
     }
   }
 

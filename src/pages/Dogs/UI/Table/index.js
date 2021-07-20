@@ -128,9 +128,13 @@ export const TransactionsTable = () => {
               <Dropdown.Item onClick={() => setModalCreateDog({ open: true, id: id, type: 'edit', index: index })}>
                 <FontAwesomeIcon icon={faEdit} className="me-2" /> Editar
               </Dropdown.Item>
-              <Dropdown.Item className="text-danger" onClick={deleteImage}>
-                <FontAwesomeIcon  icon={faTrashAlt} className="me-2" /> Eliminar
-              </Dropdown.Item>
+              {
+                !adoption_status && (
+                  <Dropdown.Item className="text-danger" onClick={deleteImage}>
+                    <FontAwesomeIcon  icon={faTrashAlt} className="me-2" /> Eliminar
+                  </Dropdown.Item>
+                )
+              }
             </Dropdown.Menu>
           </Dropdown>
         </td>
