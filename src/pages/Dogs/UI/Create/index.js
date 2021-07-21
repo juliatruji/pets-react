@@ -22,6 +22,15 @@ const Create = () => {
 
   const handleClose =  () => {
     setModalCreateDog({open:false})
+    setForm({
+      name: '',
+      race: '',
+      gender: '',
+      color: '',
+      sterilized: '',
+      size: '',
+      image: '',
+    })
   }
 
   const handleSave = async (e) => {
@@ -51,7 +60,6 @@ const Create = () => {
         })
         console.log(res);
         setDogs([res.data.data.pet, ...dogs])
-        setModalCreateDog({ open: false })
         swal("Estupendo!", "Operación exitosa", "success");
       } catch {
         swal("Opps!", "Ocurrió un error", "error");
@@ -71,12 +79,12 @@ const Create = () => {
         const data = [...dogs]
         data[modalCreateDog.index] = res.data.data.pet
         setDogs([...data])
-        setModalCreateDog({ open: false })
         swal("Estupendo!", "Operación exitosa", "success");
       } catch {
         swal("Opps!", "Ocurrió un error", "error");
       }
     }
+    handleClose()
   }
 
 

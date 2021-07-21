@@ -42,6 +42,11 @@ const AddVaccine = () => {
 
   const handleClose = () => {
     setModalVaccine({open:false})
+    setForm({
+      image: '',
+      control_type: '',
+      pet_id: '',
+    })
   }
 
   const handleSave = async (e) => {
@@ -66,7 +71,6 @@ const AddVaccine = () => {
         })
         console.log(res);
         setVaccines([res.data.data.veterinary_appointment, ...vaccines])
-        setModalVaccine({ open: false })
         swal("Estupendo!", "Operación exitosa", "success");
       } catch {
         swal("Opps!", "Ocurrió un error", "error");
@@ -86,12 +90,12 @@ const AddVaccine = () => {
         const data = [...vaccines]
         data[modalVaccine.index] = res.data.data.veterinary_appointment
         setVaccines([...data])
-        setModalVaccine({ open: false })
         swal("Estupendo!", "Operación exitosa", "success");
       } catch {
         swal("Opps!", "Ocurrió un error", "error");
       }
     }
+    handleClose()
   }
 
   const onChangeImage = (e) => {
