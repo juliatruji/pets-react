@@ -57,19 +57,25 @@ export const TransactionsTable = () => {
   };
 
   const items = [];
-  for (let number = 1; number <= totalPages; number++) {
-    const isItemActive = page === number;
+  if (totalPages > 5) {
 
-    const handlePaginationChange = () => {
-      setPages(number);
+    
+
+  } else {
+    for (let number = 1; number <= totalPages; number++) {
+      const isItemActive = page === number;
+
+      const handlePaginationChange = () => {
+        setPages(number);
+      };
+
+      items.push(
+        <Pagination.Item active={isItemActive} key={number} onClick={handlePaginationChange}>
+          {number}
+        </Pagination.Item>
+      );
     };
-
-    items.push(
-      <Pagination.Item active={isItemActive} key={number} onClick={handlePaginationChange}>
-        {number}
-      </Pagination.Item>
-    );
-  };
+  }
   const TableRow = (props) => {
     
     const { setModalImage, setDogs, dogs } = useContext(Context)

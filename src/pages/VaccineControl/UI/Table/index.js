@@ -55,19 +55,26 @@ export const TransactionsTable = () => {
   };
 
   const items = [];
-  for (let number = 1; number <= totalPages; number++) {
-    const isItemActive = page === number;
 
-    const handlePaginationChange = () => {
-      setPages(number);
+  if (totalPages > 10 ) {
+    
+    
+
+  } else {
+    for (let number = 1; number <= totalPages; number++) {
+      const isItemActive = page === number;
+  
+      const handlePaginationChange = () => {
+        setPages(number);
+      };
+  
+      items.push(
+        <Pagination.Item active={isItemActive} key={number} onClick={handlePaginationChange}>
+          {number}
+        </Pagination.Item>
+      );
     };
-
-    items.push(
-      <Pagination.Item active={isItemActive} key={number} onClick={handlePaginationChange}>
-        {number}
-      </Pagination.Item>
-    );
-  };
+  }
 
   const TableRow = (props) => {
     const { id, image, control_type, date, pet, index } = props;
