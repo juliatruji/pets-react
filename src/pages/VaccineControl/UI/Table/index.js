@@ -8,9 +8,10 @@ import { Routes } from "../../../../routes";
 import { API, token } from '../../../../config/helpers'
 import axios from 'axios'
 import Context from '../../Brain/context'
+import swal from 'sweetalert';
 
 export const TransactionsTable = () => {
-  const { vaccines, setVaccines} = useContext(Context)
+  const { vaccines, setVaccines, setModalVaccine} = useContext(Context)
 
 
   const getAdopter = async () => {
@@ -30,14 +31,47 @@ export const TransactionsTable = () => {
     getAdopter()
   }, [])
   const TableRow = (props) => {
-    const { image, control_type, date, pet } = props;
+    const { id, image, control_type, date, pet, index } = props;
+    const {setModalImage } = useContext(Context)
+
+
+
+    const deleteVeterinary = async () => {
+      try {
+        await axios.delete(`${API}/veterinary_appointments/${id}`, {
+          headers: {
+            'Authorization': `${token}`
+          }
+        })
+
+        const data = [...vaccines]
+        data.splice(index, 1)
+        setVaccines(data)
+        swal("Estupendo!", "Operación exitosa", "success");
+      } catch (error) {
+        swal("Opps!", "Ocurrió un error", "error");
+      }
+    }
+
 
     return (
       <tr>
         <td>
-          <Card.Link as={Link} to={Routes.Invoice.path} className="fw-normal">
-            {image}
-          </Card.Link>
+          <p
+            style={{
+              color: '#4A5073',
+              textDecoration: 'underline',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              margin: '0',
+              width: '148px',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+            onClick={() => setModalImage({ open: true, image: image?.url })}
+          >
+            {image?.name || ''}
+          </p>
         </td>
         <td>
           <span className="fw-normal">
@@ -62,7 +96,10 @@ export const TransactionsTable = () => {
               </span>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item className="text-danger">
+              <Dropdown.Item onClick={() => setModalVaccine({ open: true, id: id, type: 'edit', index: index })}>
+                <FontAwesomeIcon icon={faEdit} className="me-2" /> Editar
+              </Dropdown.Item>
+              <Dropdown.Item className="text-danger" onClick={deleteVeterinary}>
                 <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Eliminar
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -86,7 +123,7 @@ export const TransactionsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {vaccines.map((t, i) => <TableRow key={i} {...t} />)}
+            {vaccines.map((t, index) => <TableRow key={index} {...t} index={index} />)}
           </tbody>
         </Table>
         <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">

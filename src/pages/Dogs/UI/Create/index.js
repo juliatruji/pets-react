@@ -4,6 +4,7 @@ import { Form } from '@themesberg/react-bootstrap';
 import Context from '../../Brain/context'
 import { API, token } from '../../../../config/helpers'
 import axios from 'axios'
+import swal from 'sweetalert';
 
 const Create = () => {
 
@@ -51,8 +52,9 @@ const Create = () => {
         console.log(res);
         setDogs([res.data.data.pet, ...dogs])
         setModalCreateDog({ open: false })
+        swal("Estupendo!", "Operación exitosa", "success");
       } catch {
-
+        swal("Opps!", "Ocurrió un error", "error");
       }
     } else if (modalCreateDog.type === 'edit') {
       try {
@@ -70,8 +72,9 @@ const Create = () => {
         data[modalCreateDog.index] = res.data.data.pet
         setDogs([...data])
         setModalCreateDog({ open: false })
+        swal("Estupendo!", "Operación exitosa", "success");
       } catch {
-
+        swal("Opps!", "Ocurrió un error", "error");
       }
     }
   }
@@ -91,7 +94,6 @@ const Create = () => {
         }
       })
 
-      console.log(res.data);
       setForm({
         ...res.data
       })
@@ -124,7 +126,8 @@ const Create = () => {
           <Form.Group className="mb-3">
             <Form.Label>Sexo</Form.Label>
             <Form.Select value={form.gender} onChange={(e) => setForm({ ...form, gender: e.target.value })}>
-              <option defaultValue value='Macho'>Macho</option>
+              <option value=''>Seleccionar</option>
+              <option value='Macho'>Macho</option>
               <option value='Hembra'>Hembra</option>
             </Form.Select>
           </Form.Group>
@@ -135,6 +138,7 @@ const Create = () => {
           <Form.Group className="mb-3">
             <Form.Label>Esterelizado</Form.Label>
             <Form.Select value={form.sterilized}   onChange={(e) => setForm({ ...form, sterilized: e.target.value })}>
+              <option value=''>Seleccionar </option>
               <option defaultValue value={false}>No</option>
               <option value={true}>Si</option>
             </Form.Select>

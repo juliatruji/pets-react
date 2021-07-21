@@ -6,6 +6,7 @@ import {  Nav, Card,  Button, Table, Dropdown, Pagination, ButtonGroup } from '@
 import Context from '../../Brain/context'
 import { API, token } from '../../../../config/helpers'
 import axios from 'axios'
+import swal from 'sweetalert';
 
 export const TransactionsTable = () => {
 
@@ -24,7 +25,6 @@ export const TransactionsTable = () => {
       })
       setDogs([...res.data])
     } catch {
-
     }
   }
 
@@ -41,7 +41,7 @@ export const TransactionsTable = () => {
       setModalAdoptDog({open:true, index: index, dog: {id:id,name:name}})
     }
 
-    const deleteImage = async () => {
+    const deleteDog = async () => {
       try {
         await axios.delete(`${API}/pets/${id}`, {
           headers: {
@@ -52,8 +52,9 @@ export const TransactionsTable = () => {
         const data = [...dogs]
         data.splice(index, 1)
         setDogs(data)
+        swal("Estupendo!", "Operación exitosa", "success");
       } catch (error) {
-        
+        swal("Opps!", "Ocurrió un error", "error");
       }
     }
     return (
@@ -130,7 +131,7 @@ export const TransactionsTable = () => {
               </Dropdown.Item>
               {
                 !adoption_status && (
-                  <Dropdown.Item className="text-danger" onClick={deleteImage}>
+                  <Dropdown.Item className="text-danger" onClick={deleteDog}>
                     <FontAwesomeIcon  icon={faTrashAlt} className="me-2" /> Eliminar
                   </Dropdown.Item>
                 )

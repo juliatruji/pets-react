@@ -4,6 +4,7 @@ import { Form } from '@themesberg/react-bootstrap';
 import {API, token} from '../../../../config/helpers'
 import Context from '../../Brain/context'
 import axios from 'axios'
+import swal from 'sweetalert';
 
 const Create = () => {
 
@@ -35,8 +36,9 @@ const Create = () => {
           })
           setAdopts([res.data.data.adopter, ...adopts])
           setModalAdopt({ open: false })
+          swal("Estupendo!", "Operación exitosa", "success");
         } catch  {
-          
+          swal("Opps!", "Ocurrió un error", "error");
         }
     } else if (modalAdopt.type === 'edit') {
       try {
@@ -47,13 +49,13 @@ const Create = () => {
             'Authorization': `${token}`
           }
         })
-
         const data = [...adopts]
         data[modalAdopt.index] = res.data.data.adopter
         setAdopts([...data])
         setModalAdopt({ open: false })
+        swal("Estupendo!", "Operación exitosa", "success");
       } catch {
-
+        swal("Opps!", "Ocurrió un error", "error");
       }
     }
   }
@@ -71,7 +73,6 @@ const Create = () => {
         ...res.data
       })
     } catch {
-
     }
   }
   useEffect(() => {

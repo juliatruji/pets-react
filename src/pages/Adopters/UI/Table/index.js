@@ -6,7 +6,7 @@ import {  Nav, Card,  Button, Table, Dropdown, Pagination, ButtonGroup } from '@
 import Context from '../../Brain/context'
 import { API, token } from '../../../../config/helpers'
 import axios from 'axios'
-
+import swal from 'sweetalert';
 
 
 export const TransactionsTable = () => {
@@ -32,9 +32,28 @@ export const TransactionsTable = () => {
     getAdopter()
   }, [])
 
+
   const TableRow = (props) => {
-    const { id, name, dni, address, cel, age, index } = props;
+    const { id, name, dni, address, cel, age, index, count_pets } = props;
     const { setModalAdopt } = useContext(Context)
+
+
+    const deleteAdopter = async () => {
+      try {
+        await axios.delete(`${API}/adopters/${id}`, {
+          headers: {
+            'Authorization': `${token}`
+          }
+        })
+
+        const data = [...adopts]
+        data.splice(index, 1)
+        setAdopts(data)
+        swal("Estupendo!", "Operación exitosa", "success");
+      } catch (error) {
+        swal("Opps!", "Ocurrió un error", "error");
+      }
+    }
 
     return (
       <tr>
@@ -72,9 +91,13 @@ export const TransactionsTable = () => {
               <Dropdown.Item onClick={() => setModalAdopt({ open: true, id: id, type: 'edit', index: index })}>
                 <FontAwesomeIcon icon={faEdit} className="me-2" /> Editar
               </Dropdown.Item>
-              <Dropdown.Item className="text-danger">
-                <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Eliminar
-              </Dropdown.Item>
+              {
+                !count_pets && (
+                  <Dropdown.Item className="text-danger" onClick={deleteAdopter}>
+                    <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Eliminar
+                  </Dropdown.Item>
+                )
+              }
             </Dropdown.Menu>
           </Dropdown>
         </td>

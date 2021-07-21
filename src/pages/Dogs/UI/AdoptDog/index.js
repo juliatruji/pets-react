@@ -65,9 +65,7 @@ const Create = () => {
 
       console.log(res.data);
       setAdopts([...res.data])
-
     } catch {
-
     }
   }
   useEffect(() => {

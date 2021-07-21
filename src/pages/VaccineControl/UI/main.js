@@ -6,6 +6,8 @@ import { TransactionsTable } from './Table/index.js';
 import Context from '../Brain/context'
 import { useContext } from "react";
 import AddVaccine from './addVaccine'
+import ModalImage from './ModalImage'
+
 const Main = () => {
 
   const { setModalVaccine} = useContext(Context)
@@ -39,7 +41,7 @@ const Main = () => {
             </InputGroup>
           </Col>
           <Col xs={4} md={2} xl={1} className="ps-md-0 text-end">
-            <Button variant="primary" className="m-1" onClick={() => setModalVaccine(true)}>
+            <Button variant="primary" className="m-1" onClick={() => setModalVaccine({open:true, type:'create'})}>
               <FontAwesomeIcon icon={faPlus} className="me-2" /> Agregar
             </Button>
             {/* <Dropdown as={ButtonGroup}>
@@ -62,6 +64,8 @@ const Main = () => {
       </div>
       <AddVaccine />
       <TransactionsTable />
+      <ModalImage />
+
     </>
   );
 };

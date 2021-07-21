@@ -3,15 +3,17 @@ import PropTypes from 'prop-types'
 const Context = React.createContext()
 
 export const Provider = ({ children }) => {
-  const [modalVaccine, setModalVaccine] = useState(false)
-
+  const [modalVaccine, setModalVaccine] = useState({open:false})
+  const [modalImage, setModalImage] = useState({ open: false, img: '' })
   const [vaccines, setVaccines] = useState([])
 
   const value = {
     modalVaccine,
     setModalVaccine,
     vaccines,
-    setVaccines,
+    setVaccines, 
+    modalImage, 
+    setModalImage
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>
