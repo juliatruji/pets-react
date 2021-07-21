@@ -79,19 +79,19 @@ export const TransactionsTable = () => {
 
   const items = [];
     
-    for (let number = minPage; number <= maxPage; number++) {
-      const isItemActive = page === number;
+  for (let number = minPage; number <= maxPage; number++) {
+    const isItemActive = page === number;
 
-      const handlePaginationChange = () => {
-        setPages(number);
-      };
-
-      items.push(
-        <Pagination.Item active={isItemActive} key={number} onClick={handlePaginationChange}>
-          {number}
-        </Pagination.Item>
-      );
+    const handlePaginationChange = () => {
+      setPages(number);
     };
+
+    items.push(
+      <Pagination.Item active={isItemActive} key={number} onClick={handlePaginationChange}>
+        {number}
+      </Pagination.Item>
+    );
+  };
     
   
   const TableRow = (props) => {
