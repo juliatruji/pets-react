@@ -122,8 +122,8 @@ export default () => {
             title="Tamaños"
             data={[
               { id: 1, label: "Gigantes", value: parseInt(statistics.pets?.sizes?.extra_large), color: "tertiary", icon: faPaw },
-              {id: 2, label: "Grandes", value: parseInt(statistics.pets?.sizes?.large), color: "primary", icon: faPaw },
-              { id: 3, label: "Medianos", value: parseInt(statistics.pets?.sizes?.medium), color: "secondary", icon: faPaw },
+              { id: 2, label: "Grandes", value: parseInt(statistics.pets?.sizes?.large), color: "secondary", icon: faPaw },
+              { id: 3, label: "Medianos", value: parseInt(statistics.pets?.sizes?.medium), color: "primary", icon: faPaw },
               {id: 4, label: "Pequeños", value: parseInt(statistics.pets?.sizes?.small), color: "warning", icon: faPaw }
             ]}
             />

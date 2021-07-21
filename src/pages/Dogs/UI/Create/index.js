@@ -152,7 +152,13 @@ const Create = () => {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Tamaño</Form.Label>
-            <Form.Control value={form.size}   type="text" placeholder="Escriba un tamaño" onChange={(e) => setForm({ ...form, size: e.target.value })} />
+            <Form.Select value={form.size} onChange={(e) => setForm({ ...form, size: e.target.value })} >
+              <option value=''>Seleccionar </option>
+              <option value='Gigante'>Gigante</option>
+              <option value='Grande'>Grande</option>
+              <option value='Mediano'>Mediano</option>
+              <option value='Pequeño'>Pequeño</option>
+            </Form.Select>
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Foto</Form.Label>

@@ -39,7 +39,11 @@ export const TransactionsTable = () => {
     getPets()
   }, [search, page])
 
-  const [disablePrev, setDisablePrev] = React.useState(true);
+  const [disablePrev, setDisablePrev] = useState(true);
+  const [minPage, setMinPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(5);
+
+
   const withIcons = true
 
   const onPrevItem = () => {
@@ -59,8 +63,20 @@ export const TransactionsTable = () => {
   const items = [];
   if (totalPages > 5) {
 
-    
+    for (let number = minPage; number <= maxPage; number++) {
+      const isItemActive = page === number;
 
+      const handlePaginationChange = () => {
+        setPages(number);
+      };
+
+      items.push(
+        <Pagination.Item active={isItemActive} key={number} onClick={handlePaginationChange}>
+          {number}
+        </Pagination.Item>
+      );
+    };
+    
   } else {
     for (let number = 1; number <= totalPages; number++) {
       const isItemActive = page === number;
