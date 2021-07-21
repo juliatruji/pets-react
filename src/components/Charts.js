@@ -5,7 +5,7 @@ import ChartistTooltip from 'chartist-plugin-tooltips-updated';
 
 export const SalesValueChart = ({ ages }) => {
   const data = {
-    labels: ['Menos de 20 años', 'de 21 años a 30 años', 'de 31 años a 40 años', 'de 41 años a 50 años', 'de 51 a mas'],
+    labels: ['Menos de 20 años', 'de 21 años a 30 años', 'de 31 años a 40 años', 'de 41 años a 50 años', '51+'],
     series: [[
       ages?.less_twenty,
       ages?.twenty_thirty,

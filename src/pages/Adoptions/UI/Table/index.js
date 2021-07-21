@@ -1,28 +1,34 @@
 
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useContext} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {   faEdit, faEllipsisH,  faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faEllipsisH, faEye, faAngleDoubleRight, faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons';
 import {  Nav, Card,  Button, Table, Dropdown, Pagination, ButtonGroup } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Routes } from "../../../../routes";
 import { API, token } from '../../../../config/helpers'
 import axios from 'axios'
-
+import Context from '../../Brain/context'
 
 
 export const TransactionsTable = () => {
 
   const [adoptions, setAdptions] = useState([])
+  const { search } = useContext(Context)
 
   const getAdoptions = async () => {
     try {
       const res = await axios.get(`${API}/adoptions`, {
         headers: {
           'Authorization': `${token}`
+        },
+        params:{
+          q: search
         }
       })
 
-      console.log(res.data);
+      console.log(res);
+      console.log(res.headers.total);
+
       setAdptions(res.data)
 
     } catch {
@@ -31,17 +37,48 @@ export const TransactionsTable = () => {
   }
   useEffect(() => {
     getAdoptions()
-  }, [])
+  }, [search])
+
+  
+
+  const [activeItem, setActiveItem] = React.useState(1);
+
+  const totalPages = 5
+  const withIcons = true
+  const disablePrev = false
+
+
+  const onPrevItem = () => {
+    const prevActiveItem = activeItem === 1 ? activeItem : activeItem - 1;
+    setActiveItem(prevActiveItem);
+  };
+
+  const onNextItem = (totalPages) => {
+    const nextActiveItem = activeItem === totalPages ? activeItem : activeItem + 1;
+    setActiveItem(nextActiveItem);
+  };
+
+  const items = [];
+  for (let number = 1; number <= totalPages; number++) {
+    const isItemActive = activeItem === number;
+
+    const handlePaginationChange = () => {
+      setActiveItem(number);
+    };
+
+    items.push(
+      <Pagination.Item active={isItemActive} key={number} onClick={handlePaginationChange}>
+        {number}
+      </Pagination.Item>
+    );
+  };
 
   const TableRow = (props) => {
     const { adopter, pet, date, admin } = props;
-
     return (
       <tr>
         <td>
-          <Card.Link as={Link} to={Routes.Invoice.path} className="fw-normal">
-            {adopter.name}
-          </Card.Link>
+          {adopter.name}
         </td>
         <td>
           <span className="fw-normal">
@@ -75,22 +112,18 @@ export const TransactionsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {adoptions.map(t => <TableRow key={`transaction-${t.invoiceNumber}`} {...t} />)}
+            {adoptions.map((t, index) => <TableRow index={index} key={index} {...t} />)}
           </tbody>
         </Table>
         <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
           <Nav>
-            <Pagination className="mb-2 mb-lg-0">
-              <Pagination.Prev>
-                Anterior
+            <Pagination size={"md"} className="mt-3">
+              <Pagination.Prev disabled={disablePrev} onClick={onPrevItem}>
+                {withIcons ? <FontAwesomeIcon icon={faAngleDoubleLeft} /> : "Previous"}
               </Pagination.Prev>
-              <Pagination.Item active>1</Pagination.Item>
-              <Pagination.Item>2</Pagination.Item>
-              <Pagination.Item>3</Pagination.Item>
-              <Pagination.Item>4</Pagination.Item>
-              <Pagination.Item>5</Pagination.Item>
-              <Pagination.Next>
-                Siguiente
+              {items}
+              <Pagination.Next onClick={() => onNextItem(totalPages)}>
+                {withIcons ? <FontAwesomeIcon icon={faAngleDoubleRight} /> : "Next"}
               </Pagination.Next>
             </Pagination>
           </Nav>
