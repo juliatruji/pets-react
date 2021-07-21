@@ -75,9 +75,9 @@ export default () => {
             ages={statistics.adopters?.ages}
           />
         </Col>
-        <Col xs={12} sm={6} xl={4} className="mb-4">
+        <Col xs={12} sm={6} xl={3} className="mb-4">
           <CounterWidget
-            category="Perros adoptados"
+            category="Adoptados"
             title={statistics.pets?.adopted}
             period="Feb 1 - Apr 1"
             percentage={18.2}
@@ -86,19 +86,19 @@ export default () => {
           />
         </Col>
 
-        <Col xs={12} sm={6} xl={4} className="mb-4">
+        <Col xs={12} sm={6} xl={3} className="mb-4">
           <CounterWidget
-            category="Perros sin adoptar"
-            title={statistics.pets?.no_adopted}
+            category="Sin adoptar"
+            title={statistics.pets?.not_adopted}
             period="Feb 1 - Apr 1"
             percentage={28.4}
             icon={faDog}
             iconColor="shape-tertiary"
           />
         </Col>
-        <Col xs={12} sm={6} xl={4} className="mb-4">
+        <Col xs={12} sm={6} xl={3} className="mb-4">
           <CounterWidget
-            category="Perros esterelizados"
+            category="Esterilizados"
             title={statistics.pets?.sterilized}
             period="Feb 1 - Apr 1"
             percentage={28.4}
@@ -106,10 +106,10 @@ export default () => {
             iconColor="shape-tertiary"
           />
         </Col>
-        <Col xs={12} sm={6} xl={4} className="mb-4">
+        <Col xs={12} sm={6} xl={3} className="mb-4">
           <CounterWidget
-            category="Perros sin esterilizar"
-            title={statistics.pets?.sterilized}
+            category="Sin esterilizar"
+            title={statistics.pets?.not_sterilized}
             period="Feb 1 - Apr 1"
             percentage={28.4}
             icon={faDog}
@@ -117,7 +117,7 @@ export default () => {
           />
         </Col>
 
-        <Col xs={12} sm={6} xl={4} className="mb-4">
+        <Col xs={12} sm={6} xl={6} className="mb-4">
           <CircleChartWidget
             title="Tamaños"
             data={[
