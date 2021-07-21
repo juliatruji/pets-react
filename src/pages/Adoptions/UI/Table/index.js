@@ -13,23 +13,28 @@ import Context from '../../Brain/context'
 export const TransactionsTable = () => {
 
   const [adoptions, setAdptions] = useState([])
+  const [totalPages, setTotalPages] = useState(0)
+  const [page, setPages] = useState(1)
+
+
   const { search } = useContext(Context)
 
   const getAdoptions = async () => {
     try {
       const res = await axios.get(`${API}/adoptions`, {
         headers: {
-          'Authorization': `${token}`
+          'Authorization': `${token}`,
         },
         params:{
-          q: search
+          q: search,
+          page: page
         }
       })
 
       console.log(res);
-      console.log(res.headers.total);
-
       setAdptions(res.data)
+      console.log(Math.ceil(res.headers.total / 25));
+      setTotalPages(Math.ceil(res.headers.total / 25))
 
     } catch {
 
@@ -37,33 +42,35 @@ export const TransactionsTable = () => {
   }
   useEffect(() => {
     getAdoptions()
-  }, [search])
+  }, [search, page])
 
   
 
-  const [activeItem, setActiveItem] = React.useState(1);
-
-  const totalPages = 5
+  const [disablePrev, setDisablePrev] = React.useState(true);
   const withIcons = true
-  const disablePrev = false
+
 
 
   const onPrevItem = () => {
-    const prevActiveItem = activeItem === 1 ? activeItem : activeItem - 1;
-    setActiveItem(prevActiveItem);
+    const prevActiveItem = page === 1 ? page : page - 1;
+    setPages(prevActiveItem);
+    if (prevActiveItem === 1) {
+      setDisablePrev(true)
+    }
   };
 
   const onNextItem = (totalPages) => {
-    const nextActiveItem = activeItem === totalPages ? activeItem : activeItem + 1;
-    setActiveItem(nextActiveItem);
+    const nextActiveItem = page === totalPages ? page : page + 1;
+    setPages(nextActiveItem);
+    setDisablePrev(false)
   };
 
   const items = [];
   for (let number = 1; number <= totalPages; number++) {
-    const isItemActive = activeItem === number;
+    const isItemActive = page === number;
 
     const handlePaginationChange = () => {
-      setActiveItem(number);
+      setPages(number);
     };
 
     items.push(
