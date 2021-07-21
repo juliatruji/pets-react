@@ -5,7 +5,7 @@ import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-sv
 import { faFacebookF, faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
-
+import {API} from '../../../../config/helpers'
 import { Routes } from "../../routes";
 import BgImage from "../../assets/img/illustrations/signin.svg";
 import { useState } from "react";
@@ -19,7 +19,7 @@ export default () => {
 
   const getLogin = async () => {
     try {
-      const res = await axios.post('http://localhost:3000/logins', {
+      const res = await axios.post(`${API}/logins`, {
         email: email,
         password: password
       })
