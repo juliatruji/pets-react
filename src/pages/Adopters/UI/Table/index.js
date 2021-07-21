@@ -11,13 +11,16 @@ import swal from 'sweetalert';
 
 export const TransactionsTable = () => {
 
-  const { adopts, setAdopts } = useContext(Context)
+  const { adopts, setAdopts,search } = useContext(Context)
 
   const getAdopter =  async () => {
     try {
       const res = await axios.get(`${API}/adopters`, {
         headers: {
           'Authorization': `${token}`
+        },
+        params: {
+          q: search
         }
       })
       
@@ -30,7 +33,7 @@ export const TransactionsTable = () => {
   }
   useEffect(() => {
     getAdopter()
-  }, [])
+  }, [search])
 
 
   const TableRow = (props) => {

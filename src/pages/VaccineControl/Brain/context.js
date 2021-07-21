@@ -6,6 +6,7 @@ export const Provider = ({ children }) => {
   const [modalVaccine, setModalVaccine] = useState({open:false})
   const [modalImage, setModalImage] = useState({ open: false, img: '' })
   const [vaccines, setVaccines] = useState([])
+  const [search, setSearch] = useState('')
 
   const value = {
     modalVaccine,
@@ -13,7 +14,9 @@ export const Provider = ({ children }) => {
     vaccines,
     setVaccines, 
     modalImage, 
-    setModalImage
+    setModalImage,
+    search, 
+    setSearch
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>

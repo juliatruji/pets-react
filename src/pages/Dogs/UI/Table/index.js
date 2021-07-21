@@ -10,19 +10,21 @@ import swal from 'sweetalert';
 
 export const TransactionsTable = () => {
 
-  const { setModalAdoptDog, setModalCreateDog, dogs, setDogs } = useContext(Context)
+  const { setModalAdoptDog, setModalCreateDog, dogs, setDogs, search } = useContext(Context)
 
 
   const getPets = async () => {
     try {
       const res = await axios.get(`${API}/pets`,  {
         headers: {
-          'Authorization': `${token}`
+          'Authorization': `${token}`,
         },
         params: {
-          q: ''
+          q: search
         }
       })
+      console.log(res);
+
       setDogs([...res.data])
     } catch {
     }
@@ -30,7 +32,7 @@ export const TransactionsTable = () => {
 
   useEffect(() => {
     getPets()
-  }, [])
+  }, [search])
 
   const TableRow = (props) => {
     
@@ -48,7 +50,7 @@ export const TransactionsTable = () => {
             'Authorization': `${token}`
           }
         })
-        
+
         const data = [...dogs]
         data.splice(index, 1)
         setDogs(data)

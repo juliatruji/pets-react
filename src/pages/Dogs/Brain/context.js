@@ -6,6 +6,8 @@ export const Provider = ({ children }) => {
   const [modalCreateDog, setModalCreateDog] = useState({open: false, type: ''})
   const [modalAdoptDog, setModalAdoptDog] = useState({open:false})
   const [modalImage, setModalImage] = useState({ open: false, img: '' })
+  const [search, setSearch] = useState('')
+
 
 
 
@@ -20,6 +22,8 @@ export const Provider = ({ children }) => {
     setModalAdoptDog,
     modalImage, 
     setModalImage,
+    search,
+    setSearch
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>

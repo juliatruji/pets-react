@@ -75,7 +75,6 @@ const Create = () => {
             'Authorization': `${token}`
           }
         })
-        console.log(res);
         const data = [...dogs]
         data[modalCreateDog.index] = res.data.data.pet
         setDogs([...data])

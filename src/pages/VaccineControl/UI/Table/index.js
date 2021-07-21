@@ -11,7 +11,7 @@ import Context from '../../Brain/context'
 import swal from 'sweetalert';
 
 export const TransactionsTable = () => {
-  const { vaccines, setVaccines, setModalVaccine} = useContext(Context)
+  const { vaccines, setVaccines, setModalVaccine, search} = useContext(Context)
 
 
   const getAdopter = async () => {
@@ -19,6 +19,9 @@ export const TransactionsTable = () => {
       const res = await axios.get(`${API}/veterinary_appointments`, {
         headers: {
           'Authorization': `${token}`
+        },
+        params: {
+          q: search
         }
       })
 
@@ -29,7 +32,8 @@ export const TransactionsTable = () => {
   }
   useEffect(() => {
     getAdopter()
-  }, [])
+  }, [search])
+
   const TableRow = (props) => {
     const { id, image, control_type, date, pet, index } = props;
     const {setModalImage } = useContext(Context)
