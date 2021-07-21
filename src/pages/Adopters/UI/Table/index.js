@@ -30,7 +30,9 @@ export const TransactionsTable = () => {
       console.log(res.data);
       setAdopts([...res.data])
       setTotalPages(Math.ceil(res.headers.total / 25))
-
+      if (Math.ceil(res.headers.total / 25) < 6) {
+        setMaxPage(Math.ceil(res.headers.total / 25))
+      }
     } catch {
 
     }
@@ -39,14 +41,25 @@ export const TransactionsTable = () => {
     getAdopter()
   }, [search, page])
 
-  const [disablePrev, setDisablePrev] = React.useState(true);
+  const [disablePrev, setDisablePrev] = useState(true);
+  const [disableNext, setDisableNext] = useState(false);
+
+  const [minPage, setMinPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(5);
+
+
   const withIcons = true
 
   const onPrevItem = () => {
     const prevActiveItem = page === 1 ? page : page - 1;
     setPages(prevActiveItem);
+    setDisableNext(false)
     if (prevActiveItem === 1) {
       setDisablePrev(true)
+    }
+    if (prevActiveItem < minPage) {
+      setMinPage(prevActiveItem)
+      setMaxPage(maxPage - 1)
     }
   };
 
@@ -54,10 +67,19 @@ export const TransactionsTable = () => {
     const nextActiveItem = page === totalPages ? page : page + 1;
     setPages(nextActiveItem);
     setDisablePrev(false)
+    if (nextActiveItem === totalPages) {
+      setDisableNext(true)
+    }
+    if (nextActiveItem > maxPage) {
+      setMaxPage(nextActiveItem)
+      setMinPage(minPage + 1)
+
+    }
   };
 
   const items = [];
-  for (let number = 1; number <= totalPages; number++) {
+
+  for (let number = minPage; number <= maxPage; number++) {
     const isItemActive = page === number;
 
     const handlePaginationChange = () => {
@@ -169,7 +191,7 @@ export const TransactionsTable = () => {
                 {withIcons ? <FontAwesomeIcon icon={faAngleDoubleLeft} /> : "Previous"}
               </Pagination.Prev>
               {items}
-              <Pagination.Next onClick={() => onNextItem(totalPages)}>
+              <Pagination.Next disabled={disableNext}  onClick={() => onNextItem(totalPages)}>
                 {withIcons ? <FontAwesomeIcon icon={faAngleDoubleRight} /> : "Next"}
               </Pagination.Next>
             </Pagination>
