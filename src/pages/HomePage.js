@@ -7,7 +7,7 @@ import Adoptions from "./Adoptions/Brain/index";
 import Adopters from "./Adopters/Brain/index";
 import Dogs from "./Dogs/Brain/index";
 import VaccineControl from "./VaccineControl/Brain/index";
-
+import Dashboard from './dashboard/DashboardOverview'
 import BootstrapTables from "./tables/BootstrapTables";
 import Signin from "./examples/Signin";
 import Signup from "./examples/Signup";
@@ -74,24 +74,28 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
   );
 };
 
-export default () => (
-  <Switch>
-    {/* <RouteWithLoader exact path={Routes.Presentation.path} component={Presentation} /> */}
-    <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
-    <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
-    <RouteWithLoader exact path={Routes.ForgotPassword.path} component={ForgotPassword} />
-    <RouteWithLoader exact path={Routes.ResetPassword.path} component={ResetPassword} />
-    <RouteWithLoader exact path={Routes.Lock.path} component={Lock} />
-    <RouteWithLoader exact path={Routes.NotFound.path} component={NotFoundPage} />
-    <RouteWithLoader exact path={Routes.ServerError.path} component={ServerError} />
+export default () => {
 
+  return <Switch>
+    
+        <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
+     
+    {/* <RouteWithLoader exact path={Routes.Signup.path} component={Signup} /> */}
+    {/* <RouteWithLoader exact path={Routes.ForgotPassword.path} component={ForgotPassword} /> */}
+    {/* <RouteWithLoader exact path={Routes.ResetPassword.path} component={ResetPassword} /> */}
+    {/* <RouteWithLoader exact path={Routes.Lock.path} component={Lock} /> */}
+    <RouteWithLoader exact path={Routes.NotFound.path} component={NotFoundPage} />
+    {/* <RouteWithLoader exact path={Routes.ServerError.path} component={ServerError} /> */}
     {/* pages */}
+    <RouteWithSidebar exact path={Routes.Dashboard.path} component={Dashboard} />
+
     <RouteWithSidebar exact path={Routes.Adoptions.path} component={Adoptions} />
     <RouteWithSidebar exact path={Routes.Adopters.path} component={Adopters} />
     <RouteWithSidebar exact path={Routes.Dogs.path} component={Dogs} />
     <RouteWithSidebar exact path={Routes.VaccineControl.path} component={VaccineControl} />
-    <RouteWithSidebar exact path={Routes.BootstrapTables.path} component={BootstrapTables} />
+    {/* <RouteWithSidebar exact path={Routes.BootstrapTables.path} component={BootstrapTables} /> */}
 
-    <Redirect to={Routes.NotFound.path} />
+    {!localStorage.getItem('token') && <Redirect to={Routes.Signin.path} />}
+    {localStorage.getItem('token') && <Redirect to={Routes.NotFound.path} />}
   </Switch>
-);
+};

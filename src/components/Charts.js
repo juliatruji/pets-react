@@ -3,12 +3,19 @@ import React from "react";
 import Chartist from "react-chartist";
 import ChartistTooltip from 'chartist-plugin-tooltips-updated';
 
-export const SalesValueChart = () => {
+export const SalesValueChart = ({ ages }) => {
   const data = {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    series: [[1, 2, 2, 3, 3, 4, 3]]
+    labels: ['Menos de 20 años', 'de 21 años a 30 años', 'de 31 años a 40 años', 'de 41 años a 50 años', 'de 51 a mas'],
+    series: [[
+      ages?.less_twenty,
+      ages?.twenty_thirty,
+      ages?.thirty_forty,
+      ages?.forty_fifty,
+      ages?.fifty_more,
+    ]]
   };
 
+  console.log(ages);
   const options = {
     low: 0,
     showArea: true,

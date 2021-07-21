@@ -4,7 +4,7 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faBoxOpen, faChartPie, faCog, faFileAlt, faHandHoldingUsd, faSignOutAlt, faTable, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faDog, faSyringe, faChartPie, faUsers, faBoxOpen, faHandHoldingUsd, faSignOutAlt, faTable, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -70,7 +70,7 @@ export default (props = {}) => {
   return (
     <>
       <Navbar expand={false} collapseOnSelect variant="dark" className="navbar-theme-primary px-4 d-md-none">
-        <Navbar.Brand className="me-lg-5" as={Link} to={Routes.Adoptions.path}>
+        <Navbar.Brand className="me-lg-5" as={Link} to={Routes.Dashboard.path}>
           <Image src={ReactHero} className="navbar-brand-light" />
         </Navbar.Brand>
         <Navbar.Toggle as={Button} aria-controls="main-navbar" onClick={onCollapse}>
@@ -87,8 +87,8 @@ export default (props = {}) => {
                 </div>
                 <div className="d-block">
                   <h6>Hi, Jane</h6>
-                  <Button as={Link} variant="secondary" size="xs" to={Routes.Signin.path} className="text-dark">
-                    <FontAwesomeIcon icon={faSignOutAlt} className="me-2" /> Sign Out
+                  <Button as={Link} variant="secondary" size="xs" to={Routes.Signin.path} className="text-dark" onClick={() => localStorage.clear()}>
+                    <FontAwesomeIcon icon={faSignOutAlt} className="me-2" /> Cerrar sesión
                   </Button>
                 </div>
               </div>
@@ -97,12 +97,12 @@ export default (props = {}) => {
               </Nav.Link>
             </div>
             <Nav className="flex-column pt-3 pt-md-0">
-              <NavItem title="La casa de Amelia gaaaa" image={ReactHero} />
-
-              <NavItem title="Adopciones" link={Routes.Adoptions.path} icon={faChartPie} />
-              <NavItem title="Adoptantes" icon={faHandHoldingUsd} link={Routes.Adopters.path} />
-              <NavItem title="Perros" icon={faCog} link={Routes.Dogs.path} />
-              <NavItem title="Control de vacunas" icon={faCog} link={Routes.VaccineControl.path} />
+              <NavItem title="La casa de Amelia" image={ReactHero} />
+              <NavItem title="Tablero" link={Routes.Dashboard.path} icon={faChartPie} />
+              <NavItem title="Adopciones" link={Routes.Adoptions.path} icon={faBoxOpen} />
+              <NavItem title="Adoptantes" icon={faUsers} link={Routes.Adopters.path} />
+              <NavItem title="Perros" icon={faDog} link={Routes.Dogs.path} />
+              <NavItem title="Control de vacunas" icon={faSyringe} link={Routes.VaccineControl.path} />
 
 {/* 
               <CollapsableNavItem eventKey="tables/" title="Tables" icon={faTable}>

@@ -18,19 +18,19 @@ export default () => {
           <Row>
             <Col xs={12} className="text-center d-flex align-items-center justify-content-center">
               <div>
-                <Card.Link as={Link} to={Routes.Adoptions.path}>
+                <Card.Link as={Link} to={Routes.Dashboard.path}>
                   <Image src={NotFoundImage} className="img-fluid w-75" />
                 </Card.Link>
                 <h1 className="text-primary mt-5">
-                  Page not <span className="fw-bolder">found</span>
+                  Página no <span className="fw-bolder">encontrada</span>
                 </h1>
                 <p className="lead my-4">
-                  Oops! Looks like you followed a bad link. If you think this is a
-                  problem with us, please tell us.
+                  UPS! Parece que siguió un enlace incorrecto. Si crees que esto es un
+                  problema con nosotros, por favor díganos.
             </p>
-                <Button as={Link} variant="primary" className="animate-hover" to={Routes.Adoptions.path}>
+                <Button as={Link} variant="primary" className="animate-hover" to={Routes.Dashboard.path}>
                   <FontAwesomeIcon icon={faChevronLeft} className="animate-left-3 me-3 ms-2" />
-                  Go back home
+                  Regresar
                 </Button>
               </div>
             </Col>

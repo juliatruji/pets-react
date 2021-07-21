@@ -20,6 +20,13 @@ const Create = () => {
 
   const handleClose = () => {
     setModalAdopt({ open: false })
+    setForm({
+      name: '',
+      dni: '',
+      address: '',
+      cel: '',
+      age: '',
+    })
   }
 
   const handleSave = async (e) => {
@@ -35,7 +42,6 @@ const Create = () => {
             }
           })
           setAdopts([res.data.data.adopter, ...adopts])
-          setModalAdopt({ open: false })
           swal("Estupendo!", "Operación exitosa", "success");
         } catch  {
           swal("Opps!", "Ocurrió un error", "error");
@@ -52,12 +58,12 @@ const Create = () => {
         const data = [...adopts]
         data[modalAdopt.index] = res.data.data.adopter
         setAdopts([...data])
-        setModalAdopt({ open: false })
         swal("Estupendo!", "Operación exitosa", "success");
       } catch {
         swal("Opps!", "Ocurrió un error", "error");
       }
     }
+    handleClose()
   }
 
   const getAdopter = async () => {

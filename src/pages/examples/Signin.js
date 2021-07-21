@@ -28,8 +28,7 @@ export default () => {
       localStorage.setItem('name', res.data.name);
       localStorage.setItem('idAdmin', res.data.id);
       localStorage.setItem('email', res.data.email);
-      localStorage.setItem('keys', password);
-
+      window.location.href = Routes.Signup.path;
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +49,7 @@ export default () => {
                 <div className="text-center text-md-center mb-4 mt-md-0">
                   <h3 className="mb-0">Ingresar</h3>
                 </div>
-                <Form className="mt-4" onSubmit={onSubmitLogin}>
+                <Form className="mt-4" >
                   <Form.Group id="email" className="mb-4">
                     <Form.Label>Email</Form.Label>
                     <InputGroup>
@@ -78,8 +77,8 @@ export default () => {
                       <Card.Link className="small text-end">Lost password?</Card.Link>
                     </div> */}
                   </Form.Group>
-                  <Button variant="primary" type="submit" className="w-100" >
-                    Sign in
+                  <Button variant="primary" type="submit" className="w-100"  onClick={onSubmitLogin}>
+                    Iniciar Sesión
                   </Button>
                 </Form>
                 <div className="mt-3 mb-4 text-center">

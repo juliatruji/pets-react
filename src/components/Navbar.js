@@ -4,10 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faCog, faEnvelopeOpen, faSearch, faSignOutAlt, faUserShield } from "@fortawesome/free-solid-svg-icons";
 import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
 import { Row, Col, Nav, Form, Image, Navbar, Dropdown, Container, ListGroup, InputGroup } from '@themesberg/react-bootstrap';
-
+import { Routes } from "../routes";
 import NOTIFICATIONS_DATA from "../data/notifications";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
-
+import {
+  Redirect,
+} from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export default (props) => {
   const [notifications, setNotifications] = useState(NOTIFICATIONS_DATA);
@@ -47,7 +50,6 @@ export default (props) => {
   };
 
   const handleLogout = () => {
-    console.log('asdsd');
     localStorage.clear()
   }
 
@@ -113,8 +115,8 @@ export default (props) => {
 
                 <Dropdown.Divider /> */}
 
-                <Dropdown.Item className="fw-bold" onClick={() => handleLogout()}>
-                  <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2"  /> Logout
+                <Dropdown.Item className="fw-bold" as={Link} to={Routes.Signin.path}  onClick={() => localStorage.clear()}>
+                  <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2"  /> Cerrar sesión
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

@@ -1,7 +1,8 @@
 
 export const Routes = {
     // pages
-    Adoptions: { path: "/" },
+    Dashboard: { path: "/" },
+    Adoptions: { path: "/Adoptions" },
     Adopters: { path: "/Adopters" },
     Dogs: { path: "/Dogs" },
     VaccineControl: { path: "/VaccineControl" },

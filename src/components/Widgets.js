@@ -85,13 +85,13 @@ export const CounterWidget = (props) => {
               <h5>{category}</h5>
               <h3 className="mb-1">{title}</h3>
             </div>
-            <small>{period}, <FontAwesomeIcon icon={faGlobeEurope} size="xs" /> WorldWide</small>
-            <div className="small mt-2">
+            {/* <small>{period}, <FontAwesomeIcon icon={faGlobeEurope} size="xs" /> WorldWide</small> */}
+            {/* <div className="small mt-2">
               <FontAwesomeIcon icon={percentageIcon} className={`${percentageColor} me-1`} />
               <span className={`${percentageColor} fw-bold`}>
                 {percentage}%
               </span> Since last month
-            </div>
+            </div> */}
           </Col>
         </Row>
       </Card.Body>
@@ -116,7 +116,7 @@ export const CircleChartWidget = (props) => {
             {data.map(d => (
               <h6 key={`circle-element-${d.id}`} className="fw-normal text-gray">
                 <FontAwesomeIcon icon={d.icon} className={`icon icon-xs text-${d.color} w-20 me-1`} />
-                {` ${d.label} `}{`${d.value}%`}
+                {` ${d.label} `}{`${d.value}`}
               </h6>
             ))}
           </Col>
@@ -304,7 +304,7 @@ export const RankingWidget = () => {
 };
 
 export const SalesValueWidget = (props) => {
-  const { title, value, percentage } = props;
+  const { title, value, percentage, ages } = props;
   const percentageIcon = percentage < 0 ? faAngleDown : faAngleUp;
   const percentageColor = percentage < 0 ? "text-danger" : "text-success";
 
@@ -313,24 +313,24 @@ export const SalesValueWidget = (props) => {
       <Card.Header className="d-flex flex-row align-items-center flex-0">
         <div className="d-block">
           <h5 className="fw-normal mb-2">
-            {title}
+            {'Adoptantes'}
           </h5>
-          <h3>${value}</h3>
-          <small className="fw-bold mt-2">
+          <h3>{value}</h3>
+          {/* <small className="fw-bold mt-2">
             <span className="me-2">Yesterday</span>
             <FontAwesomeIcon icon={percentageIcon} className={`${percentageColor} me-1`} />
             <span className={percentageColor}>
               {percentage}%
             </span>
-          </small>
+          </small> */}
         </div>
         <div className="d-flex ms-auto">
-          <Button variant="secondary" size="sm" className="me-2">Month</Button>
-          <Button variant="primary" size="sm" className="me-3">Week</Button>
+          {/* <Button variant="secondary" size="sm" className="me-2">Month</Button>
+          <Button variant="primary" size="sm" className="me-3">Week</Button> */}
         </div>
       </Card.Header>
       <Card.Body className="p-2">
-        <SalesValueChart />
+        <SalesValueChart ages={ages} />
       </Card.Body>
     </Card>
   );

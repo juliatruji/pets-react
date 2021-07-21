@@ -13,7 +13,7 @@ export const TransactionsTable = () => {
   const { setModalAdoptDog, setModalCreateDog, dogs, setDogs } = useContext(Context)
 
 
-  const getAdopter = async () => {
+  const getPets = async () => {
     try {
       const res = await axios.get(`${API}/pets`,  {
         headers: {
@@ -29,7 +29,7 @@ export const TransactionsTable = () => {
   }
 
   useEffect(() => {
-    getAdopter()
+    getPets()
   }, [])
 
   const TableRow = (props) => {
