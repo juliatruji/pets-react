@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 import { Routes } from "../routes";
 import ThemesbergLogo from "../assets/img/themesberg.svg";
-import ReactHero from "../assets/img/technologies/react-hero-logo.svg";
+import ReactHero from "../assets/img/technologies/logo-amelie.png";
 import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
 
 export default (props = {}) => {
@@ -97,7 +97,7 @@ export default (props = {}) => {
               </Nav.Link>
             </div>
             <Nav className="flex-column pt-3 pt-md-0">
-              <NavItem title="La casa de Amelia" image={ReactHero} />
+              <NavItem title="La Casa de Amelie" image={ReactHero} />
               <NavItem title="Tablero" link={Routes.Dashboard.path} icon={faChartPie} />
               <NavItem title="Adopciones" link={Routes.Adoptions.path} icon={faBoxOpen} />
               <NavItem title="Adoptantes" icon={faUsers} link={Routes.Adopters.path} />
