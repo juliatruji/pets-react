@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Button, Modal } from '@themesberg/react-bootstrap';
-import Context from '../../Brain/context'
+import Context from '../../Brain/context';
+import { API } from '../../../../config/helpers';
 
 const Create = () => {
 
@@ -17,7 +18,7 @@ const Create = () => {
           <Button variant="close" aria-label="Close" onClick={handleClose} />
         </Modal.Header>
         <Modal.Body>
-        <img src={modalImage.image} class="img-fluid" alt="gaaa" />
+        <img src={API + modalImage.image} class="img-fluid" alt="Perro" />
         </Modal.Body>
         <Modal.Footer>
           
